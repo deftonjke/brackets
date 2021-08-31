@@ -1,12 +1,19 @@
 module.exports = function check(str, bracketsConfig) {
-	let stack = [];
+
+  let stack = [];
   let split = str.split('');
-  split.forEach(el => {
-  	if (el === bracketsConfig[0]) {
-    	stack.push(el);
-    } else if (el === bracketsConfig[1]) {
-    	stack.pop();
-    }
+
+  split.forEach((symbol) => {
+    stack.push(symbol);
+
+    bracketsConfig.forEach(bracket => {
+      if (stack[stack.length - 2] === bracket[0] && symbol === bracket[1]) {
+        stack.pop();
+        stack.pop();
+      }
+    });
   });
-  return (stack.length === 0) ? true : false;
+
+  return stack.length === 0;
 }
+
